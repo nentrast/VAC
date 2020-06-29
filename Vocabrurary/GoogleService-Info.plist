@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>941071386689-m83ieabtiucu7vd25f6tghojm3nota7j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.941071386689-m83ieabtiucu7vd25f6tghojm3nota7j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDK8tV37H5yisXD7p6jowOR6k2Afp8pfaY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>941071386689</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>lobanov.alexandr.vocabulary</string>
+	<key>PROJECT_ID</key>
+	<string>vocabulary-d4b85</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vocabulary-d4b85.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:941071386689:ios:8e84e989191c0758b9dec0</string>
+	<key>DATABASE_URL</key>
+	<string>https://vocabulary-d4b85.firebaseio.com</string>
+</dict>
+</plist>
