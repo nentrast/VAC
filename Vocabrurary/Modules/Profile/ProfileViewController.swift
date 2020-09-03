@@ -8,24 +8,30 @@
 
 import UIKit
 
+protocol ProfilePresenterOutput: class {
+    func presenter(configure username: String)
+}
+
 class ProfileViewController: UIViewController {
     
+    // MARK: - Properties
+    var profileView: ProfileView?
+    var interactor: ProfileInteractor?
+    weak var presenter: ProfilePresenter?
+        
+    override func loadView() {
+        super.loadView()
+        view = profileView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        interactor?.viewDidLoad()
     }
+}
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension ProfileViewController: ProfilePresenterOutput {
+    func presenter(configure username: String) {
+        profileView?.updateUsernameLabel(with: username)
     }
-    */
-
 }

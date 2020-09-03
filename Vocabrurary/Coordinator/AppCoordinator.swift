@@ -16,7 +16,7 @@ class AppCoordinator: CoordinatorEngine, Coordinatable {
     }
     
     private func performMain() {
-        let coordinator = WordsCollectionCoordinator(router: router)
+        let coordinator = TabBarCoordinator(router: router)
         
         coordinator.flowCompletion = { [weak self, weak coordinator] in
             guard let `self` = self, let `coordinator` = coordinator else {
@@ -25,10 +25,12 @@ class AppCoordinator: CoordinatorEngine, Coordinatable {
             self.detachChild(coordinator)
             self.start()
         }
+        
         attachChild(coordinator)
     }
     
     private func performAuth() {
+        
     }
 }
 

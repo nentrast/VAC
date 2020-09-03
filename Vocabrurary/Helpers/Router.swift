@@ -23,6 +23,65 @@ protocol Routable: class {
 
 typealias RouterCompletions = [UIViewController : (() -> Void)?]
 
+class RouterTabBar {
+    
+    private let router: Routable
+    private let tabBarController: UITabBarController
+    
+    init(router: Routable, tabBarController: UITabBarController) {
+        self.tabBarController = tabBarController
+        self.router  = router
+    }
+}
+
+extension RouterTabBar: Routable {
+    func present(_ module: Presentable?) {
+        router.present(module)
+    }
+    
+    func present(_ module: Presentable?, animated: Bool) {
+        router.present(module, animated: animated)
+    }
+    
+    func push(_ module: Presentable?, animated: Bool) {
+        router.push(module, animated: animated)
+    }
+    
+    func push(_ module: Presentable?, animated: Bool, navigationBarIsHidden: Bool) {
+        router.push(module, animated: animated, navigationBarIsHidden: navigationBarIsHidden)
+    }
+    
+    func push(_ module: Presentable?) {
+        router.push(module)
+    }
+    
+    func dismissModule(animated: Bool, completion: (() -> Void)?) {
+        router.dismissModule(animated: animated
+            , completion: completion)
+    }
+    
+    func popToRootModule(animated: Bool) {
+        router.popToRootModule(animated: animated)
+    }
+    
+    func popModule(animated: Bool) {
+        router.popModule(animated: animated)
+    }
+    
+    func setRootModule(_ module: Presentable?, hideBar: Bool) {
+        guard let module = module else {
+            return
+        }
+        if tabBarController.viewControllers?.isEmpty ?? true {
+            tabBarController.setViewControllers([module.toPresent!], animated: true)
+        } else {
+            var controllers = tabBarController.viewControllers ?? []
+            controllers.append(module.toPresent!)
+            tabBarController.setViewControllers(controllers, animated: true)
+        }
+    }
+}
+
 final class Router: NSObject {
     
     // MARK: - Private variables
@@ -36,10 +95,6 @@ final class Router: NSObject {
     init(rootController: UINavigationController) {
         self.rootController = rootController
         completions = [:]
-    }
-    
-    var toPresent: UIViewController? {
-        return rootController
     }
 }
 

@@ -8,66 +8,67 @@
 
 import UIKit
 
-protocol Presentable: class {
-    var toPresent: UIViewController? { get }
-}
-
-extension UIViewController: Presentable {
-    var toPresent: UIViewController? {
-        return self
+    protocol Presentable: class {
+        var toPresent: UIViewController? { get }
     }
-}
 
-protocol Coordinatable: class {
-    var flowCompletion: (() -> Void)? { get set }
-    func start()
-}
+    extension UIViewController: Presentable {
+        var toPresent: UIViewController? {
+            return self
+        }
+    }
 
-protocol CoordinatorDelegate: class {
-    func coordinator(didAttached coordinator: Coordinatable)
-    func coordinator(didDetached coordinator: Coordinatable)
-}
+    protocol Coordinatable: class {
+        var flowCompletion: (() -> Void)? { get set }
+        func start()
+    }
 
-protocol CoordinatorEngineProtocol: class {
-    var childs: [Coordinatable] { get set }
-    var router: Routable { get set }
+    protocol CoordinatorDelegate: class {
+        func coordinator(didAttached coordinator: Coordinatable)
+        func coordinator(didDetached coordinator: Coordinatable)
+    }
+
+    protocol CoordinatorEngineProtocol: class {
+        var childs: [Coordinatable] { get set }
+        var router: Routable { get set }
+            
+        func attachChild(_ child: Coordinatable)
+        func detachChild(_ child: Coordinatable)
         
-    func attachChild(_ child: Coordinatable)
-    func detachChild(_ child: Coordinatable)
-    
-    func didAttachedChild(_ coordinator: Coordinatable)
-    func didDetachChidl(_ coordinator: Coordinatable)
-}
-
-extension CoordinatorEngineProtocol {
-    func didAttachedChild(_ coordinator: Coordinatable) { }
-    func didDetachChidl(_ coordinator: Coordinatable) { }
-}
-
-class CoordinatorEngine: CoordinatorEngineProtocol {    
-    var childs: [Coordinatable] = []
-    var router: Routable
-    
-    init(router: Routable) {
-        self.router = router
+        func didAttachedChild(_ coordinator: Coordinatable)
+        func didDetachChidl(_ coordinator: Coordinatable)
     }
-    
-    func attachChild(_ child: Coordinatable) {
-        guard !childs.contains(where: { $0 === child}) else {
-            return
+
+    extension CoordinatorEngineProtocol {
+        func didAttachedChild(_ coordinator: Coordinatable) { }
+        func didDetachChidl(_ coordinator: Coordinatable) { }
+    }
+
+    class CoordinatorEngine: NSObject, CoordinatorEngineProtocol {
+        var childs: [Coordinatable] = []
+        var router: Routable
+        
+        init(router: Routable) {
+            self.router = router
+            super.init()
         }
         
-        childs.append(child)
-        didAttachedChild(child)
-        child.start()
-    }
-    
-    func detachChild(_ child: Coordinatable) {
-        guard !childs.isEmpty, let index = childs.firstIndex(where: { $0 === child }) else {
-            return
+        func attachChild(_ child: Coordinatable) {
+            guard !childs.contains(where: { $0 === child}) else {
+                return
+            }
+            
+            childs.append(child)
+            didAttachedChild(child)
+            child.start()
         }
         
-        didDetachChidl(child)
-        childs.remove(at: index)
+        func detachChild(_ child: Coordinatable) {
+            guard !childs.isEmpty, let index = childs.firstIndex(where: { $0 === child }) else {
+                return
+            }
+            
+            didDetachChidl(child)
+            childs.remove(at: index)
+        }
     }
-}

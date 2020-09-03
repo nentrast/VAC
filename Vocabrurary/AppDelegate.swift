@@ -35,6 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         application.registerForRemoteNotifications()
         
+       let r =  ApiReequest().run(objectType: String.self).map { (request) -> String in
+            return request.value
+       }.mapError({ (error) -> Error in
+         return error
+       }).eraseToAnyPublisher()
+        
         return true
     }
     

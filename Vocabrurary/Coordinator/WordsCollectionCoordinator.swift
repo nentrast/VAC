@@ -19,6 +19,7 @@ protocol CoordinatorDissmisable: class {
 class WordsCollectionCoordinator: CoordinatorEngine, Coordinatable, WordsCoordinatorInput, CoordinatorDissmisable {
     var flowCompletion: (() -> Void)?
     
+    
     func start() {
         showWordsList()
     }

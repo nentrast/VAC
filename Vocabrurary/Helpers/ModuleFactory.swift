@@ -9,7 +9,7 @@
 import UIKit
 
 class ModuleFactory {
-    func makeWordList(coordinator: WordsCoordinatorInput) -> UIViewController {
+    func makeWordList(coordinator: WordsCoordinatorInput) -> Presentable {
         let view  = WordsListViewController()
         let presenter = WordsListPresenter()
         let usecase = WordsListUsecase()
@@ -26,7 +26,7 @@ class ModuleFactory {
     }
     
     
-    func makeWordCollection(coordinator: CoordinatorDissmisable, collection: CollectionWordsUsecase.Collection, selected indexPath: IndexPath) -> UIViewController {
+    func makeWordCollection(coordinator: CoordinatorDissmisable, collection: CollectionWordsUsecase.Collection, selected indexPath: IndexPath) -> Presentable {
         let view = CollectionWordsViewController()
         let presenter = CollectionWordsPresenter(selected: indexPath)
         let usecase = CollectionWordsUsecase(for: collection)
